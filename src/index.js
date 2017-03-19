@@ -33,6 +33,12 @@ var dashboard = new ParseDashboard({
       "masterKey": process.env.MASTER_KEY || "minimalistMasterKey",
       "appName": "Nike Minimalist Fashion App"
     }
+  ],
+  "users": [
+    {
+      "user": "nike",
+      "pass": "minimalist"
+    }
   ]
 }, true);
 
