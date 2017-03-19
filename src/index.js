@@ -34,7 +34,7 @@ var dashboard = new ParseDashboard({
       "appName": "Nike Minimalist Fashion App"
     }
   ]
-}, false);
+}, true);
 
 var app = express();
 
