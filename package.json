@@ -27,8 +27,7 @@
     "start": "npm run build && node dist/index.js"
   },
   "engines": {
-    "node": ">=4.3",
-    "npm": "4.0.5"
+    "node": ">=4.3"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",

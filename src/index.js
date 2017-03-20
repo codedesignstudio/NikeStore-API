@@ -45,12 +45,6 @@ var dashboard = new ParseDashboard({
 
 var app = express();
 
-// Serve static assets from the /public folder
-app.use('/public', express.static(path.join(__dirname, '/public')));
-
-// Serve static assets from the /public folder
-app.use('/docs', express.static(path.join(__dirname, '/apidocs')));
-
 // Use morgan for logging and bodyParser to dissect request body
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -58,6 +52,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Mount routes
 app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'users', apiv1RoutesConfig.usersRoutes);
+
+// Serve static assets from the /public folder
+app.use('/public', express.static(path.join(__dirname, '/public')));
+
+// Serve api docs from the /apidocs folder
+app.use('/docs', express.static(path.join(__dirname, '/apidocs')));
 
 // Serve the Parse API on the /parse URL prefix
 var mountPath = process.env.PARSE_MOUNT || '/parse';
