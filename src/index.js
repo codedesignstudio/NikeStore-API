@@ -1,5 +1,6 @@
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
+var Parse = require('parse/node');
 var ParseDashboard = require('parse-dashboard');
 var path = require('path');
 var logger = require('morgan');
@@ -55,6 +56,9 @@ app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'users', apiv1RoutesConfig.usersRo
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));
 
+// Serve static assets from the /public folder
+app.use('/docs', express.static(path.join(__dirname, '/apidocs')));
+
 // Serve the Parse API on the /parse URL prefix
 var mountPath = process.env.PARSE_MOUNT || '/parse';
 app.use(mountPath, api);
@@ -62,6 +66,10 @@ app.use(mountPath, api);
 // Serve the Parse Dashboard on the /dashboard URL prefix
 var dashboardPath = process.env.DASHBOARD_MOUNT || '/dashboard';
 app.use(dashboardPath, dashboard);
+
+// Initialize the Parse server
+Parse.initialize(process.env.APP_ID || 'minimalistAppId');
+Parse.serverURL = process.env.SERVER_URL || 'http://localhost:1337/parse';
 
 // Parse Server plays nicely with the rest of your web routes
 app.get('/', function(req, res) {

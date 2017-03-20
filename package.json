@@ -12,12 +12,14 @@
     "body-parser": "^1.17.1",
     "crypto": "0.0.3",
     "express": "~4.11.x",
+    "joi": "^10.2.2",
     "jsonwebtoken": "^7.3.0",
     "kerberos": "~0.0.x",
     "morgan": "^1.8.1",
     "parse": "~1.8.0",
     "parse-dashboard": "^1.0.24",
-    "parse-server": "*"
+    "parse-server": "*",
+    "underscore": "^1.8.3"
   },
   "scripts": {
     "dev": "nodemon --exec babel-node src/index.js",
