@@ -1,3 +1,5 @@
+process.env.PWD = process.cwd();
+
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var Parse = require('parse/node');
@@ -54,10 +56,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'users', apiv1RoutesConfig.usersRoutes);
 
 // Serve static assets from the /public folder
-app.use('/public', express.static(path.join(__dirname, '/public')));
+app.use('/public', express.static(path.join(process.env.PWD, '/public')));
 
 // Serve static assets from the /public folder
-app.use('/docs', express.static(path.join(__dirname, '/apidocs')));
+app.use('/docs', express.static(path.join(process.env.PWD, '/apidocs')));
 
 // Serve the Parse API on the /parse URL prefix
 var mountPath = process.env.PARSE_MOUNT || '/parse';
