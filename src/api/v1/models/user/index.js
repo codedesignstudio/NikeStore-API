@@ -1,7 +1,7 @@
-import * as userActions from './user';
-import { default as userValidator } from './validator';
+const userActions = require('./user');
+const userValidator = require('./validator');
 
-export {
+module.exports = {
     userActions,
     userValidator
-}
+};

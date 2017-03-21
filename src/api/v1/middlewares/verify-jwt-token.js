@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
-import { configConstants } from '../config';
+const configConstants = require('../config').configConstants;
 
-export default function verifyJWTToken(req, res, next) {
+let verifyJWTToken = (req, res, next) => {
     let token = req.body.token;
     if (token) {
-        jwt.verify(token, 'JWT_TOKEN_SECRET', (error, decoded) => {
+        jwt.verify(token, configConstants.JWT_TOKEN_SECRET, (error, decoded) => {
             if (error) {
                 res.status(500).json({
                     status: 'failed',
@@ -21,4 +21,6 @@ export default function verifyJWTToken(req, res, next) {
             error: 'No token provided'
         });
     }
-}
+};
+
+module.exports = verifyJWTToken;

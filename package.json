@@ -22,16 +22,9 @@
     "underscore": "^1.8.3"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/index.js",
-    "build": "babel src --out-dir dist --copy-files",
-    "start": "npm run build && node dist/index.js"
+    "start": "nodemon src/index.js"
   },
   "engines": {
     "node": ">=4.3"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.24.0",
-    "babel-preset-es2015": "^6.24.0",
-    "nodemon": "^1.11.0"
   }
 }

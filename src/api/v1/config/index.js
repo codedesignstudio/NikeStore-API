@@ -1,7 +1,7 @@
-import * as constantsConfig from './constants';
-import hashPassword from './password-hasher';
-import signJWTToken from './jwt-token-signer';
-import checkUniqueUser from './unique-user-checker';
+const constantsConfig = require('./constants');
+const hashPassword = require('./password-hasher');
+const signJWTToken = require('./jwt-token-signer');
+const checkUniqueUser = require('./unique-user-checker');
 
 module.exports = {
     constantsConfig,

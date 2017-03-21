@@ -1,7 +1,7 @@
 const Parse = require('parse/node');
 let MinimalistUser = Parse.Object.extend('MinimalistUser');
 
-export default function checkUniqueUser(email) {
+let checkUniqueUser = email => {
     let promise = new Parse.Promise();
     let query = new Parse.Query(MinimalistUser);
     query.equalTo('email', email);
@@ -18,3 +18,5 @@ export default function checkUniqueUser(email) {
 
     return promise;
 }
+
+module.exports = checkUniqueUser;

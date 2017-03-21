@@ -6,8 +6,8 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-import { constantsConfig } from './api/v1/config';
-import * as apiv1RoutesConfig from './api/v1/routes';
+const constantsConfig = require('./api/v1/config').constantsConfig;
+const apiv1RoutesConfig = require('./api/v1/routes').usersRoutes;
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
@@ -51,7 +51,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Mount routes
-app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'users', apiv1RoutesConfig.usersRoutes);
+app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'users', apiv1RoutesConfig);
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));
@@ -72,13 +72,13 @@ Parse.initialize(process.env.APP_ID || 'minimalistAppId');
 Parse.serverURL = process.env.SERVER_URL || 'http://localhost:1337/parse';
 
 // Parse Server plays nicely with the rest of your web routes
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   res.status(200).send('Nike Minimalist Fashion App!');
 });
 
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
-httpServer.listen(port, function() {
+httpServer.listen(port, () => {
     console.log('nike minimalist fashion app API server running on port ' + port + '.');
 });
 

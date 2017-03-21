@@ -1,7 +1,5 @@
-import verifyJWTToken from './verify-jwt-token';
-import authClientMiddleware from './auth-client';
+const verifyJWTToken = require('./verify-jwt-token');
 
-export {
-    verifyJWTToken,
-    authClientMiddleware
-}
+module.exports = {
+    verifyJWTToken
+};

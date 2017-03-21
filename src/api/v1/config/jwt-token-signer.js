@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
-import { JWT_TOKEN_SECRET } from './constants';
+const JWT_TOKEN_SECRET = require('./constants').JWT_TOKEN_SECRET;
 
-export default function signJWTToken(user) {
-    return jwt.sign(user, 'JWT_TOKEN_SECRET', { expiresIn: '1y' });
-}
+let signJWTToken = user => {
+    return jwt.sign(user, JWT_TOKEN_SECRET, { expiresIn: '1y' });
+};
+
+module.exports = signJWTToken;

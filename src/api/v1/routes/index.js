@@ -1,6 +1,5 @@
-const path = require('path');
-import { default as usersRoutes } from './users';
+const usersRoutes = require('./users');
 
-export {
+module.exports = {
     usersRoutes
 }

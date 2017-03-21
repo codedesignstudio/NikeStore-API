@@ -5,4 +5,4 @@ const schema = Joi.object().keys({
     password: Joi.string().required()
 }).with('email', 'password');
 
-export default schema
+module.exports = schema;

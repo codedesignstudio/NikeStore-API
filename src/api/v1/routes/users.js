@@ -2,7 +2,8 @@ const express = require('express');
 const Joi = require('joi');
 const _ = require('underscore');
 let router = express.Router();
-import { userActions, userValidator } from '../models/user';
+const userActions = require('../models/user').userActions,
+    userValidator = require('../models/user').userValidator;
 
 router.post('/register', (req, res, next) => {
     const result = Joi.validate({
@@ -36,4 +37,4 @@ router.post('/login', (req, res, next) => {
     }
 });
 
-export default router;
+module.exports = router;

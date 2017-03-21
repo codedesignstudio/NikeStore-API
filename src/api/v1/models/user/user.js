@@ -1,6 +1,8 @@
 const Parse = require('parse/node');
 const _ = require('underscore');
-import { hashPassword, signJWTToken, checkUniqueUser } from '../../config';
+const hashPassword = require('../../config').hashPassword,
+    signJWTToken = require('../../config').signJWTToken,
+    checkUniqueUser = require('../../config').checkUniqueUser;
 let MinimalistUser = Parse.Object.extend('MinimalistUser');
 
 /**
@@ -15,7 +17,7 @@ let MinimalistUser = Parse.Object.extend('MinimalistUser');
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/users/register
  */
-export function create(payload, res) {
+exports.create = (payload, res) => {
     checkUniqueUser(payload.email).then((result) => {
         if (_.isNull(result)) {
             let user = new MinimalistUser();
@@ -61,7 +63,7 @@ export function create(payload, res) {
  * @apiSuccess {String} token JWT that would be used to make subsequent requests
  * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/users/login
  */
-export function authenticate(payload, res) {
+exports.authenticate = (payload, res) => {
     let query = new Parse.Query(MinimalistUser);
     query.select('email');
     query.equalTo('email', payload.email);
