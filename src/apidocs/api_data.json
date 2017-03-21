@@ -103,6 +103,20 @@
             "optional": false,
             "field": "password",
             "description": "<p>User password <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "full_name",
+            "description": "<p>User full name <strong><strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>User phone number <strong>(required)</strong></p>"
           }
         ]
       }

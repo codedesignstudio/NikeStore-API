@@ -11,6 +11,8 @@ let MinimalistUser = Parse.Object.extend('MinimalistUser');
  * @apiVersion 1.0.0
  * @apiParam {String} email User email <strong><strong>(required)</strong>
  * @apiParam {String} password User password <strong>(required)</strong>
+ * @apiParam {String} full_name User full name <strong><strong>(required)</strong>
+ * @apiParam {String} phone User phone number <strong>(required)</strong>
  * @apiError (Error 500) {String} error Shows info about error that occured
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {Object} user User information
@@ -23,7 +25,8 @@ exports.create = (payload, res) => {
             let user = new MinimalistUser();
             user.set('email', payload.email);
             user.set('password', hashPassword(payload.password));
-            user.set('category', 'customer');
+            user.set('full_name', payload.full_name);
+            user.set('phone', payload.phone);
 
             user.save(null).then((user) => {
                 res.status(200).json({
@@ -65,7 +68,7 @@ exports.create = (payload, res) => {
  */
 exports.authenticate = (payload, res) => {
     let query = new Parse.Query(MinimalistUser);
-    query.select('email');
+    query.select('email', 'full_name', 'phone');
     query.equalTo('email', payload.email);
     query.equalTo('password', hashPassword(payload.password));
     query.first().then((user) => {
