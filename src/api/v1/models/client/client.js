@@ -4,8 +4,8 @@ const hashPassword = require('../../config').hashPassword,
 let MinimalistClient = Parse.Object.extend('MinimalistClient');
 
 /**
- * @api {post} /clients/login Authenticate a Client(Backdoor personnel)
- * @apiGroup Client(Backdoor personnel)
+ * @api {post} /clients/login Authenticate a Client
+ * @apiGroup Client
  * @apiVersion 1.0.0
  * @apiParam {String} username Client username <strong>(required)</strong>
  * @apiParam {String} password Client password <strong>(required)</strong>
