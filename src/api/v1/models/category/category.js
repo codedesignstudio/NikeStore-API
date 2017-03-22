@@ -3,32 +3,18 @@ const _ = require('underscore');
 const checkUniqueCategory = require('../../config').checkUniqueCategory;
 let MinimalistCategory = Parse.Object.extend('MinimalistCategory');
 
-exports.create = (payload, res) => {
+exports.create = (payload) => {
+    let promise = new Parse.Promise();
     checkUniqueCategory(payload.name).then(result => {
         if (_.isNull(result)) {
             let minimalistCategory = new MinimalistCategory();
             minimalistCategory.set('name', payload.name);
-            minimalistCategory.save(null).then(category => {
-                res.status(200).json({
-                    status: 'success',
-                    category
-                });
-            }).catch(error => {
-                res.status(500).json({
-                    status: 'failed',
-                    error: 'Failed to create Category. Error: ' + error.message
-                });
-            });
-        } else {
-            res.status(500).json({
-                status: 'failed',
-                error: 'Category \'' + payload.name + '\' exists'
-            });
-        }
-    }).catch(error => {
-        res.status(500).json({
-            status: 'failed',
-            error: error.message
-        });
-    });
+            minimalistCategory.set('attachment_url', payload.attachment_url);
+            minimalistCategory.save(null).then(
+                category => promise.resolve(category)
+            ).catch(error => promise.reject('Failed to create Category. Error: ' + error.message));
+        } else promise.reject('Category \'' + payload.name + '\' exists');
+    }).catch(error => promise.reject(error.message));
+
+    return promise;
 };

@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
-const configConstants = require('../config').configConstants;
+const constantsConfig = require('../config').constantsConfig;
 
 let verifyJWTToken = (req, res, next) => {
     let token = req.body.token;
     if (token) {
-        jwt.verify(token, configConstants.JWT_TOKEN_SECRET, (error, decoded) => {
+        jwt.verify(token, constantsConfig.JWT_TOKEN_SECRET, (error, decoded) => {
             if (error) {
                 res.status(500).json({
                     status: 'failed',

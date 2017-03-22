@@ -1,5 +1,5 @@
 const Parse = require('parse/node');
-let MinimalistClient = parse.Objct.extend('MinimalistClient');
+let MinimalistClient = Parse.Object.extend('MinimalistClient');
 
 let authenticateAsClient = (req, res, next) => {
     let query = new Parse.Query(MinimalistClient);

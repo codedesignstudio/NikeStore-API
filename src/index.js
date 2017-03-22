@@ -53,6 +53,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Mount routes
 app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'users', apiv1RoutesConfig.usersRoutes);
 app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'clients', apiv1RoutesConfig.clientsRoutes);
+app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'categories', apiv1RoutesConfig.categoriesRoutes);
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));

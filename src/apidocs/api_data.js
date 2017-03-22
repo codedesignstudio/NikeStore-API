@@ -1,6 +1,88 @@
 define({ "api": [
   {
     "type": "post",
+    "url": "/categories/create",
+    "title": "Create a new Category",
+    "group": "Category",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Category name <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "attachment_url",
+            "description": "<p>Category image URL <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "category",
+            "description": "<p>Category information</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>JWT that would be used to make subsequent requests</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "https://nikeminimalist.herokuapp.com/api/v1/categories/create"
+      }
+    ],
+    "filename": "src/api/v1/routes/categories.js",
+    "groupTitle": "Category",
+    "name": "PostCategoriesCreate"
+  },
+  {
+    "type": "post",
     "url": "/clients/login",
     "title": "Authenticate a Client",
     "group": "Client",
