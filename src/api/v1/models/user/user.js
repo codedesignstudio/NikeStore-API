@@ -20,7 +20,7 @@ let MinimalistUser = Parse.Object.extend('MinimalistUser');
  * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/users/register
  */
 exports.create = (payload, res) => {
-    checkUniqueUser(payload.email).then((result) => {
+    checkUniqueUser(payload.email).then(result => {
         if (_.isNull(result)) {
             let user = new MinimalistUser();
             user.set('email', payload.email);
@@ -28,12 +28,12 @@ exports.create = (payload, res) => {
             user.set('full_name', payload.full_name);
             user.set('phone', payload.phone);
 
-            user.save(null).then((user) => {
+            user.save(null).then(user => {
                 res.status(200).json({
                     status: 'success',
                     user
                 });
-            }).catch((error) => {
+            }).catch(error => {
                 res.status(500).json({
                     status: 'failed',
                     error: 'Failed to create user. Error: ' + error.message
@@ -45,7 +45,7 @@ exports.create = (payload, res) => {
                 error: 'User with email \'' + payload.email + '\' exists'
             });
         }
-    }).catch((error) => {
+    }).catch(error => {
         res.status(500).json({
             status: 'failed',
             error: error.message
@@ -71,16 +71,16 @@ exports.authenticate = (payload, res) => {
     query.select('email', 'full_name', 'phone');
     query.equalTo('email', payload.email);
     query.equalTo('password', hashPassword(payload.password));
-    query.first().then((user) => {
+    query.first().then(user => {
         res.status(200).json({
             status: 'success',
             user,
             token: signJWTToken(user)
         });
-    }).catch((error) => {
+    }).catch(error => {
         res.status(500).json({
             status: 'failed',
-            error: 'Failed to authenticate User'
+            error: 'Failed to authenticate User. Error: ' + error.message
         });
     });
 };

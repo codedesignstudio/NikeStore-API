@@ -7,7 +7,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 
 const constantsConfig = require('./api/v1/config').constantsConfig;
-const apiv1RoutesConfig = require('./api/v1/routes').usersRoutes;
+const apiv1RoutesConfig = require('./api/v1/routes');
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
@@ -51,7 +51,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Mount routes
-app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'users', apiv1RoutesConfig);
+app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'users', apiv1RoutesConfig.usersRoutes);
+app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'clients', apiv1RoutesConfig.clientsRoutes);
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));
