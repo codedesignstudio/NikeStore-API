@@ -2,8 +2,8 @@
   {
     "type": "post",
     "url": "/clients/login",
-    "title": "Authenticate a Client(Backdoor personnel)",
-    "group": "Client_Backdoor_personnel_",
+    "title": "Authenticate a Client",
+    "group": "Client",
     "version": "1.0.0",
     "parameter": {
       "fields": {
@@ -78,7 +78,7 @@
       }
     ],
     "filename": "src/api/v1/models/client/client.js",
-    "groupTitle": "Client_Backdoor_personnel_",
+    "groupTitle": "Client",
     "name": "PostClientsLogin"
   },
   {
