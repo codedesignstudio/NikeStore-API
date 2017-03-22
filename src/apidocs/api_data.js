@@ -68,13 +68,6 @@ define({ "api": [
             "optional": false,
             "field": "status",
             "description": "<p>Value is 'success'. Means a successful request</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "token",
-            "description": "<p>JWT that would be used to make subsequent requests</p>"
           }
         ]
       }

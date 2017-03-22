@@ -18,7 +18,6 @@ const verifyJWTToken = require('../middlewares').verifyJWTToken,
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {Object} category Category information
  * @apiSuccess {String} status Value is 'success'. Means a successful request
- * @apiSuccess {String} token JWT that would be used to make subsequent requests
  * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/categories/create
  */
 router.post('/create',verifyJWTToken, authenticateAsClient, (req, res, next) => {
