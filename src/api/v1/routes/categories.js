@@ -13,6 +13,7 @@ const verifyJWTToken = require('../middlewares').verifyJWTToken,
  * @apiVersion 1.0.0
  * @apiParam {String} name Category name <strong>(required)</strong>
  * @apiParam {String} attachment_url Category image URL <strong>(required)</strong>
+ * @apiParam {String} token A valid Client token should be used here <strong>(required)</strong>
  * @apiError (Error 500) {String} error Shows info about error that occured
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {Object} category Category information

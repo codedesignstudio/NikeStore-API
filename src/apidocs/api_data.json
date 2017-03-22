@@ -21,6 +21,13 @@
             "optional": false,
             "field": "attachment_url",
             "description": "<p>Category image URL <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>A valid Client token should be used here <strong>(required)</strong></p>"
           }
         ]
       }
