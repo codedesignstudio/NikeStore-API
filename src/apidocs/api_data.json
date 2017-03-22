@@ -77,7 +77,7 @@
         "url": "https://nikeminimalist.herokuapp.com/api/v1/clients/login"
       }
     ],
-    "filename": "src/api/v1/models/client/client.js",
+    "filename": "src/api/v1/routes/clients.js",
     "groupTitle": "Client",
     "name": "PostClientsLogin"
   },
@@ -159,7 +159,7 @@
         "url": "https://nikeminimalist.herokuapp.com/api/v1/users/login"
       }
     ],
-    "filename": "src/api/v1/models/user/user.js",
+    "filename": "src/api/v1/routes/users.js",
     "groupTitle": "User",
     "name": "PostUsersLogin"
   },
@@ -248,7 +248,7 @@
         "url": "https://nikeminimalist.herokuapp.com/api/v1/users/register"
       }
     ],
-    "filename": "src/api/v1/models/user/user.js",
+    "filename": "src/api/v1/routes/users.js",
     "groupTitle": "User",
     "name": "PostUsersRegister"
   }
