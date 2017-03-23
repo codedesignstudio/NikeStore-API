@@ -93,7 +93,7 @@ router.post('/create', verifyJWTToken, authenticateAsClient, (req, res, next) =>
 });
 
 /**
- * @api {post} /products/:id/edit Edit details of a Product
+ * @api {put} /products/:id/edit Edit details of a Product
  * @apiGroup Product
  * @apiVersion 1.0.0
  * @apiParam {String} id ID of Product to edit <strong>(required)</strong>
