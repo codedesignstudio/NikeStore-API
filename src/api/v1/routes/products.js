@@ -93,7 +93,7 @@ router.post('/create', verifyJWTToken, authenticateAsClient, (req, res, next) =>
 });
 
 /**
- * @api {put} /products/:id/edit Edit details of a Product
+ * @api {put} /products/:id/edit Edit details of a product
  * @apiGroup Product
  * @apiVersion 1.0.0
  * @apiParam {String} id ID of Product to edit <strong>(required)</strong>
@@ -128,6 +128,38 @@ router.put('/:id/edit', verifyJWTToken, authenticateAsClient, (req, res, next) =
                 status: 'success',
                 product: result
             });
+        }).catch(error => {
+            res.status(500).json({
+                status: 'failed',
+                error
+            });
+        });
+    } else {
+        res.status(500).json({
+            status: 'failed',
+            error: result.error.details
+        });
+    }
+});
+
+/**
+ * @api {delete} /products/:id/delete Delete a product
+ * @apiGroup Product
+ * @apiVersion 1.0.0
+ * @apiParam {String} id ID of the Product to delete -- Should be passed as a request parameter <strong>(required)</strong>
+ * @apiParam {String} token A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong>
+ * @apiError (Error 500) {String} error Shows info about error that occured
+ * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
+ * @apiSuccess {String} status Value is 'success'. Means a successful request
+ */
+router.delete('/:id/delete', verifyJWTToken, authenticateAsClient, (req, res, next) => {
+    const result = Joi.validate({
+        id: req.params.id
+    }, productValidators.schema2);
+
+    if (_.isNull(result.error)) {
+        productActions.remove(req.params.id).then(result => {
+            res.status(200).json({status: 'success'});
         }).catch(error => {
             res.status(500).json({
                 status: 'failed',

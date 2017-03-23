@@ -68,7 +68,7 @@ router.get('/:id', verifyJWTToken, authenticateAsClient, (req, res, next) => {
 });
 
 /**
- * @api {post} /categories/create Create a new Category
+ * @api {post} /categories/create Create a new category
  * @apiGroup Category
  * @apiVersion 1.0.0
  * @apiParam {String} name Category name <strong>(required)</strong>

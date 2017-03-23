@@ -3,16 +3,6 @@ const _ = require('underscore');
 const categoryActions = require('../category').categoryActions;
 let MinimalistProduct = Parse.Object.extend('MinimalistProduct');
 
-// exports.getAllInProduct = category_id => {
-//     let promise = new Parse.Promise();
-//     let query = new Parse.Query(MinimalistProduct);
-//     query.find().then(
-//         products => promise.resolve(products)
-//     ).catch(error => promise.reject('Failed to retrive Categories. Error: ' + error.message));
-//
-//     return promise;
-// };
-
 exports.getOne = id => {
     let promise = new Parse.Promise();
     let query = new Parse.Query(MinimalistProduct);
@@ -62,13 +52,13 @@ exports.edit = payload => {
     return promise;
 };
 
-// exports.remove = id => {
-//     let promise = new Parse.Promise();
-//     let query = new Parse.Query(MinimalistProduct);
-//     query.get(id).then(product => {
-//         product.destroy().then(
-//             product => promise.resolve(null)
-//         ).catch(error => promise.reject('Failed to delete Product. Error: ' + error.message));
-//     }).catch(error => promise.reject('Failed to retrieve Product. Error: ' + error.message));
-//     return promise;
-// };
+exports.remove = id => {
+    let promise = new Parse.Promise();
+    let query = new Parse.Query(MinimalistProduct);
+    query.get(id).then(product => {
+        product.destroy().then(
+            product => promise.resolve(null)
+        ).catch(error => promise.reject('Failed to delete Product. Error: ' + error.message));
+    }).catch(error => promise.reject('Failed to retrieve Product. Error: ' + error.message));
+    return promise;
+};
