@@ -1,5 +1,216 @@
 [
   {
+    "type": "delete",
+    "url": "/categories/:id/delete",
+    "title": "Delete a category",
+    "group": "Category",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of the Category to delete -- Should be passed as a request parameter <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "https://nikeminimalist.herokuapp.com/api/v1/categories/categoryId/delete"
+      }
+    ],
+    "filename": "src/api/v1/routes/categories.js",
+    "groupTitle": "Category",
+    "name": "DeleteCategoriesIdDelete"
+  },
+  {
+    "type": "get",
+    "url": "/categories",
+    "title": "Get all categories",
+    "group": "Category",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "categories",
+            "description": "<p>Categories information</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "https://nikeminimalist.herokuapp.com/api/v1/categories"
+      }
+    ],
+    "filename": "src/api/v1/routes/categories.js",
+    "groupTitle": "Category",
+    "name": "GetCategories"
+  },
+  {
+    "type": "get",
+    "url": "/categories/:id",
+    "title": "Get single category",
+    "group": "Category",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of the Category to retrieve -- Should be passed as a request parameter <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "category",
+            "description": "<p>Category information</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "https://nikeminimalist.herokuapp.com/api/v1/categories/categoryId"
+      }
+    ],
+    "filename": "src/api/v1/routes/categories.js",
+    "groupTitle": "Category",
+    "name": "GetCategoriesId"
+  },
+  {
     "type": "post",
     "url": "/categories/create",
     "title": "Create a new Category",
@@ -27,7 +238,7 @@
             "type": "String",
             "optional": false,
             "field": "token",
-            "description": "<p>A valid Client token should be used here <strong>(required)</strong></p>"
+            "description": "<p>A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
           }
         ]
       }
@@ -80,6 +291,95 @@
     "filename": "src/api/v1/routes/categories.js",
     "groupTitle": "Category",
     "name": "PostCategoriesCreate"
+  },
+  {
+    "type": "put",
+    "url": "/categories/:id/edit",
+    "title": "Edit details of a category",
+    "group": "Category",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Category name <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "attachment_url",
+            "description": "<p>Category image URL <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of the Category to edit -- Should be passed as a request parameter <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "category",
+            "description": "<p>Category information</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "https://nikeminimalist.herokuapp.com/api/v1/categories/categoryId/edit"
+      }
+    ],
+    "filename": "src/api/v1/routes/categories.js",
+    "groupTitle": "Category",
+    "name": "PutCategoriesIdEdit"
   },
   {
     "type": "post",

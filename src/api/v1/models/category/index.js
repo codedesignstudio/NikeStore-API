@@ -1,7 +1,7 @@
 const categoryActions = require('./category');
-const categoryValidator = require('./validator');
+const categoryValidators = require('./validator');
 
 module.exports = {
     categoryActions,
-    categoryValidator
+    categoryValidators
 };

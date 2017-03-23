@@ -4,7 +4,7 @@ let MinimalistCategory = Parse.Object.extend('MinimalistCategory');
 let checkUniqueCategory = (name) => {
     let promise = new Parse.Promise();
     let query = new Parse.Query(MinimalistCategory);
-    query.equalTo('name', name);
+    query.equalTo('name', name.toLowerCase());
     query.first().then(category => {
         if (category) {
             promise.resolve(category);

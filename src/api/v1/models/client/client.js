@@ -3,7 +3,7 @@ const hashPassword = require('../../config').hashPassword,
     signJWTToken = require('../../config').signJWTToken;
 let MinimalistClient = Parse.Object.extend('MinimalistClient');
 
-exports.authenticate = (payload, res) => {
+exports.authenticate = payload => {
     let promise = new Parse.Promise();
     let query = new Parse.Query(MinimalistClient);
     query.equalTo('username', payload.username);

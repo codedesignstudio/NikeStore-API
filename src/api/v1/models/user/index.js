@@ -1,7 +1,7 @@
 const userActions = require('./user');
-const userValidator = require('./validator');
+const userValidators = require('./validator');
 
 module.exports = {
     userActions,
-    userValidator
+    userValidators
 };

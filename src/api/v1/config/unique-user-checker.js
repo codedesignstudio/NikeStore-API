@@ -4,7 +4,7 @@ let MinimalistUser = Parse.Object.extend('MinimalistUser');
 let checkUniqueUser = email => {
     let promise = new Parse.Promise();
     let query = new Parse.Query(MinimalistUser);
-    query.equalTo('email', email);
+    query.equalTo('email', email.toLowerCase());
     query.first().then(user => {
         if (user) {
             promise.resolve(user);

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const constantsConfig = require('../config').constantsConfig;
 
 let verifyJWTToken = (req, res, next) => {
-    let token = req.body.token;
+    let token = req.body.token || req.headers['token'];
     if (token) {
         jwt.verify(token, constantsConfig.JWT_TOKEN_SECRET, (error, decoded) => {
             if (error) {

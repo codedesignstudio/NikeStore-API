@@ -3,12 +3,32 @@ const _ = require('underscore');
 const checkUniqueCategory = require('../../config').checkUniqueCategory;
 let MinimalistCategory = Parse.Object.extend('MinimalistCategory');
 
-exports.create = (payload) => {
+exports.getAll = () => {
+    let promise = new Parse.Promise();
+    let query = new Parse.Query(MinimalistCategory);
+    query.find().then(
+        categories => promise.resolve(categories)
+    ).catch(error => promise.reject('Failed to retrive Categories. Error: ' + error.message));
+
+    return promise;
+};
+
+exports.getOne = id => {
+    let promise = new Parse.Promise();
+    let query = new Parse.Query(MinimalistCategory);
+    query.get(id).then(
+        category => promise.resolve(category)
+    ).catch(error => promise.reject('Failed to retrive Category. Error: ' + error.message));
+
+    return promise;
+};
+
+exports.create = payload => {
     let promise = new Parse.Promise();
     checkUniqueCategory(payload.name).then(result => {
         if (_.isNull(result)) {
             let minimalistCategory = new MinimalistCategory();
-            minimalistCategory.set('name', payload.name);
+            minimalistCategory.set('name', payload.name.toLowerCase());
             minimalistCategory.set('attachment_url', payload.attachment_url);
             minimalistCategory.save(null).then(
                 category => promise.resolve(category)
@@ -18,3 +38,28 @@ exports.create = (payload) => {
 
     return promise;
 };
+
+exports.edit = payload => {
+    let promise = new Parse.Promise();
+    let query = new Parse.Query(MinimalistCategory);
+    query.get(payload.category_id).then(category => {
+        category.set('name', payload.name.toLowerCase());
+        category.set('attachment_url', payload.attachment_url);
+        category.save(null).then(
+            category => promise.resolve(category)
+        ).catch(error => promise.reject('Failed to edit Category. Error: ' + error.message));
+    }).catch(error => promise.reject('Failed to retrieve Category. Error: ' + error.message));
+
+    return promise;
+};
+
+exports.remove = id => {
+    let promise = new Parse.Promise();
+    let query = new Parse.Query(MinimalistCategory);
+    query.get(id).then(category => {
+        category.destroy().then(
+            category => promise.resolve(null)
+        ).catch(error => promise.reject('Failed to delete Category. Error: ' + error.message));
+    }).catch(error => promise.reject('Failed to retrieve Category. Error: ' + error.message));
+    return promise;
+}

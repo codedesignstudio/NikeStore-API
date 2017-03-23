@@ -3,7 +3,7 @@ const Joi = require('joi');
 const _ = require('underscore');
 let router = express.Router();
 const userActions = require('../models/user').userActions,
-    userValidator = require('../models/user').userValidator;
+    userValidators = require('../models/user').userValidators;
 
 /**
  * @api {post} /users/register Register a new User
@@ -23,7 +23,9 @@ router.post('/register', (req, res, next) => {
     const result = Joi.validate({
         email: req.body.email,
         password: req.body.password,
-    }, userValidator);
+        full_name: req.body.full_name,
+        phone: req.body.phone
+    }, userValidators.schema1);
 
     if (_.isNull(result.error)) {
         userActions.create(req.body).then(result => {
@@ -62,7 +64,7 @@ router.post('/login', (req, res, next) => {
     const result = Joi.validate({
         email: req.body.email,
         password: req.body.password,
-    }, userValidator);
+    }, userValidators.schema2);
 
     if (_.isNull(result.error)) {
         userActions.authenticate(req.body).then(result => {

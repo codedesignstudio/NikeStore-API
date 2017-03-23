@@ -5,12 +5,12 @@ const hashPassword = require('../../config').hashPassword,
     checkUniqueUser = require('../../config').checkUniqueUser;
 let MinimalistUser = Parse.Object.extend('MinimalistUser');
 
-exports.create = (payload) => {
+exports.create = payload => {
     let promise = new Parse.Promise();
     checkUniqueUser(payload.email).then(result => {
         if (_.isNull(result)) {
             let user = new MinimalistUser();
-            user.set('email', payload.email);
+            user.set('email', payload.email.toLowerCase());
             user.set('password', hashPassword(payload.password));
             user.set('full_name', payload.full_name);
             user.set('phone', payload.phone);
@@ -26,7 +26,7 @@ exports.create = (payload) => {
     return promise;
 };
 
-exports.authenticate = (payload) => {
+exports.authenticate = payload => {
     let promise = new Parse.Promise();
     let query = new Parse.Query(MinimalistUser);
     query.select('email', 'full_name', 'phone');
