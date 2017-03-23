@@ -62,4 +62,4 @@ exports.remove = id => {
         ).catch(error => promise.reject('Failed to delete Category. Error: ' + error.message));
     }).catch(error => promise.reject('Failed to retrieve Category. Error: ' + error.message));
     return promise;
-}
+};

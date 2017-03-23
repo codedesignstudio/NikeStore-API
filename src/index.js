@@ -54,6 +54,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'users', apiv1RoutesConfig.usersRoutes);
 app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'clients', apiv1RoutesConfig.clientsRoutes);
 app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'categories', apiv1RoutesConfig.categoriesRoutes);
+app.use(constantsConfig.API_V1_ROUTE_PREFIX + 'products', apiv1RoutesConfig.productsRoutes);
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));

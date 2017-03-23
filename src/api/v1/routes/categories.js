@@ -16,7 +16,6 @@ const verifyJWTToken = require('../middlewares').verifyJWTToken,
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {Object} categories Categories information
  * @apiSuccess {String} status Value is 'success'. Means a successful request
- * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/categories
  */
 router.get('/', verifyJWTToken, authenticateAsClient, (req, res, next) => {
     categoryActions.getAll().then(result => {
@@ -33,7 +32,7 @@ router.get('/', verifyJWTToken, authenticateAsClient, (req, res, next) => {
 });
 
 /**
- * @api {get} /categories/:id Get single category
+ * @api {get} /categories/:id Get a single category
  * @apiGroup Category
  * @apiVersion 1.0.0
  * @apiParam {String} id ID of the Category to retrieve -- Should be passed as a request parameter <strong>(required)</strong>
@@ -42,7 +41,6 @@ router.get('/', verifyJWTToken, authenticateAsClient, (req, res, next) => {
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {Object} category Category information
  * @apiSuccess {String} status Value is 'success'. Means a successful request
- * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/categories/categoryId
  */
 router.get('/:id', verifyJWTToken, authenticateAsClient, (req, res, next) => {
     const result = Joi.validate({
@@ -159,7 +157,6 @@ router.put('/:id/edit', verifyJWTToken, authenticateAsClient, (req, res, next) =
  * @apiError (Error 500) {String} error Shows info about error that occured
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {String} status Value is 'success'. Means a successful request
- * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/categories/categoryId/delete
  */
 router.delete('/:id/delete', verifyJWTToken, authenticateAsClient, (req, res, next) => {
     const result = Joi.validate({
