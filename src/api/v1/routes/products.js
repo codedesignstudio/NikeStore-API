@@ -12,19 +12,58 @@ const verifyJWTToken = require('../middlewares').verifyJWTToken,
  * @apiGroup Product
  * @apiVersion 1.0.0
  * @apiParam {String} id ID of Product to retrieve -- Should be passed as a request parameter <strong>(required)</strong>
- * @apiParam {String} token A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong>
+ * @apiParam {String} token A valid token should be used here (Client or Customer) -- Can be passed in header or request body <strong>(required)</strong>
  * @apiError (Error 500) {String} error Shows info about error that occured
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {Object} product Product information
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  */
-router.get('/:id', verifyJWTToken, authenticateAsClient, (req, res, next) => {
+router.get('/:id', verifyJWTToken, (req, res, next) => {
     const result = Joi.validate({
         id: req.params.id
     }, productValidators.schema2);
 
     if (_.isNull(result.error)) {
         productActions.getOne(req.params.id).then(result => {
+            res.status(200).json({
+                status: 'success',
+                product: result
+            });
+        }).catch(error => {
+            res.status(500).json({
+                status: 'failed',
+                error
+            });
+        });
+    } else {
+        res.status(500).json({
+            status: 'failed',
+            error: result.error.details
+        });
+    }
+});
+
+/**
+ * @api {post} /products/:id/changecategory Change the Category a Product belongs to
+ * @apiGroup Product
+ * @apiVersion 1.0.0
+ * @apiParam {String} id ID of the Product -- Should be passed as a request parameter <strong>(required)</strong>
+ * @apiParam {String} new_category ID of the new Category <strong>(required)</strong>
+ * @apiParam {String} token A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong>
+ * @apiError (Error 500) {String} error Shows info about error that occured
+ * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
+ * @apiSuccess {Object} product Product information
+ * @apiSuccess {String} status Value is 'success'. Means a successful request
+ */
+router.post('/:id/changecategory', verifyJWTToken, authenticateAsClient, (req, res, next) => {
+    const result = Joi.validate({
+        id: req.params.id,
+        new_category: req.body.new_category
+    }, productValidators.schema4);
+
+    if (_.isNull(result.error)) {
+        req.body.product_id = req.params.id;
+        productActions.changeCategory(req.body).then(result => {
             res.status(200).json({
                 status: 'success',
                 product: result

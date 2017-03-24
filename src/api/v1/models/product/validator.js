@@ -24,7 +24,12 @@ const schema3 = Joi.object().keys({
     id: Joi.string().required()
 });
 
+const schema4 = Joi.object().keys({
+    id: Joi.string().required(),
+    new_category: Joi.string().required()
+});
+
 module.exports = {
     schema1, schema2,
-    schema3
+    schema3, schema4
 };

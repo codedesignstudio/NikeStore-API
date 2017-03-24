@@ -1,6 +1,7 @@
 const Parse = require('parse/node');
 const _ = require('underscore');
 const checkUniqueCategory = require('../../config').checkUniqueCategory;
+const productActions = require('../product').productActions;
 let MinimalistCategory = Parse.Object.extend('MinimalistCategory');
 
 exports.getAll = () => {
@@ -8,7 +9,7 @@ exports.getAll = () => {
     let query = new Parse.Query(MinimalistCategory);
     query.find().then(
         categories => promise.resolve(categories)
-    ).catch(error => promise.reject('Failed to retrive Categories. Error: ' + error.message));
+    ).catch(error => promise.reject('Failed to retrieve Categories. Error: ' + error.message));
 
     return promise;
 };
@@ -18,7 +19,19 @@ exports.getOne = id => {
     let query = new Parse.Query(MinimalistCategory);
     query.get(id).then(
         category => promise.resolve(category)
-    ).catch(error => promise.reject('Failed to retrive Category. Error: ' + error.message));
+    ).catch(error => promise.reject('Failed to retrieve Category. Error: ' + error.message));
+
+    return promise;
+};
+
+exports.getProducts = id => {
+    let promise = new Parse.Promise();
+    let query = new Parse.Query(MinimalistCategory);
+    query.get(id).then(category => {
+        productActions.getAllInCategory(category).then(
+            result => promise.resolve(result)
+        ).catch(error => promise.reject(error));
+    }).catch(error => promise.reject('Failed to retrieve Category. Error: ' + error.message));
 
     return promise;
 };

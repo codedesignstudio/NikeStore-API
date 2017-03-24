@@ -1,7 +1,7 @@
 const Parse = require('parse/node');
 const _ = require('underscore');
-const categoryActions = require('../category').categoryActions;
 let MinimalistProduct = Parse.Object.extend('MinimalistProduct');
+let MinimalistCategory = Parse.Object.extend('MinimalistCategory');
 
 exports.getOne = id => {
     let promise = new Parse.Promise();
@@ -9,14 +9,48 @@ exports.getOne = id => {
     query.include('category');
     query.get(id).then(
         product => promise.resolve(product)
-    ).catch(error => promise.reject('Failed to retrive Product. Error: ' + error.message));
+    ).catch(error => promise.reject('Failed to retrieve Product. Error: ' + error.message));
+
+    return promise;
+};
+
+exports.getAllInCategory = category => {
+    let promise = new Parse.Promise();
+    let query = new Parse.Query(MinimalistProduct);
+    query.equalTo('category', category);
+    query.find().then(
+        products => promise.resolve(products)
+    ).catch(error => promise.reject('Failed to retrieve Products. Error: ' + error.message));
+
+    return promise;
+};
+
+exports.changeCategory = payload => {
+    let promise = new Parse.Promise();
+    let query = new Parse.Query(MinimalistProduct);
+    query.include('category');
+    query.get(payload.product_id).then(product => {
+        if (product.get('category').id == payload.new_category) {
+            promise.reject('Product is already in ' + product.get('category').get('name') + ' Category. Select another Category');
+        } else {
+            let query2 = new Parse.Query(MinimalistCategory);
+            query2.get(payload.new_category).then(category => {
+                product.set('category', category);
+                product.save(null).then(
+                    product => promise.resolve(product)
+                ).catch(error => promise.reject('Failed to change Product Category. Error: ' + error.message));
+
+            }).catch(error => promise.reject(error));
+        }
+    }).catch(error => promise.reject('Failed to retrieve Product. Error: ' + error.message));
 
     return promise;
 };
 
 exports.create = payload => {
     let promise = new Parse.Promise();
-    categoryActions.getOne(payload.category_id).then(category => {
+    let query = new Parse.Query(MinimalistCategory);
+    query.get(payload.category_id).then(category => {
         let minimalistProduct = new MinimalistProduct();
         minimalistProduct.set('name', payload.name);
         minimalistProduct.set('images', payload.images);

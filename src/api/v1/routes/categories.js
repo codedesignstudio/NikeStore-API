@@ -11,13 +11,13 @@ const verifyJWTToken = require('../middlewares').verifyJWTToken,
  * @api {get} /categories Get all categories
  * @apiGroup Category
  * @apiVersion 1.0.0
- * @apiParam {String} token A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong>
+ * @apiParam {String} token A valid token should be used here (Client or Customer) -- Can be passed in header or request body <strong>(required)</strong>
  * @apiError (Error 500) {String} error Shows info about error that occured
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {Object} categories Categories information
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  */
-router.get('/', verifyJWTToken, authenticateAsClient, (req, res, next) => {
+router.get('/', verifyJWTToken, (req, res, next) => {
     categoryActions.getAll().then(result => {
         res.status(200).json({
             status: 'success',
@@ -36,13 +36,13 @@ router.get('/', verifyJWTToken, authenticateAsClient, (req, res, next) => {
  * @apiGroup Category
  * @apiVersion 1.0.0
  * @apiParam {String} id ID of the Category to retrieve -- Should be passed as a request parameter <strong>(required)</strong>
- * @apiParam {String} token A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong>
+ * @apiParam {String} token A valid token should be used here (Client or Customer) -- Can be passed in header or request body <strong>(required)</strong>
  * @apiError (Error 500) {String} error Shows info about error that occured
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {Object} category Category information
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  */
-router.get('/:id', verifyJWTToken, authenticateAsClient, (req, res, next) => {
+router.get('/:id', verifyJWTToken, (req, res, next) => {
     const result = Joi.validate({
         id: req.params.id
     }, categoryValidators.schema2);
@@ -52,6 +52,42 @@ router.get('/:id', verifyJWTToken, authenticateAsClient, (req, res, next) => {
             res.status(200).json({
                 status: 'success',
                 category: result
+            });
+        }).catch(error => {
+            res.status(500).json({
+                status: 'failed',
+                error
+            });
+        });
+    } else {
+        res.status(500).json({
+            status: 'failed',
+            error: result.error.details
+        });
+    }
+});
+
+/**
+ * @api {get} /categories/:id/products Get products in a category
+ * @apiGroup Category
+ * @apiVersion 1.0.0
+ * @apiParam {String} id ID of the Category to retrieve it's products -- Should be passed as a request parameter <strong>(required)</strong>
+ * @apiParam {String} token A valid token should be used here (Client or Customer) -- Can be passed in header or request body <strong>(required)</strong>
+ * @apiError (Error 500) {String} error Shows info about error that occured
+ * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
+ * @apiSuccess {Object} products List of products in Category
+ * @apiSuccess {String} status Value is 'success'. Means a successful request
+ */
+router.get('/:id/products', verifyJWTToken, (req, res, next) => {
+    const result = Joi.validate({
+        id: req.params.id
+    }, categoryValidators.schema2);
+
+    if (_.isNull(result.error)) {
+        categoryActions.getProducts(req.params.id).then(result => {
+            res.status(200).json({
+                status: 'success',
+                products: result
             });
         }).catch(error => {
             res.status(500).json({

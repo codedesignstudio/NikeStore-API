@@ -76,7 +76,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "token",
-            "description": "<p>A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
+            "description": "<p>A valid token should be used here (Client or Customer) -- Can be passed in header or request body <strong>(required)</strong></p>"
           }
         ]
       }
@@ -146,7 +146,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "token",
-            "description": "<p>A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
+            "description": "<p>A valid token should be used here (Client or Customer) -- Can be passed in header or request body <strong>(required)</strong></p>"
           }
         ]
       }
@@ -194,6 +194,76 @@ define({ "api": [
     "filename": "src/api/v1/routes/categories.js",
     "groupTitle": "Category",
     "name": "GetCategoriesId"
+  },
+  {
+    "type": "get",
+    "url": "/categories/:id/products",
+    "title": "Get products in a category",
+    "group": "Category",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of the Category to retrieve it's products -- Should be passed as a request parameter <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>A valid token should be used here (Client or Customer) -- Can be passed in header or request body <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "products",
+            "description": "<p>List of products in Category</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          }
+        ]
+      }
+    },
+    "filename": "src/api/v1/routes/categories.js",
+    "groupTitle": "Category",
+    "name": "GetCategoriesIdProducts"
   },
   {
     "type": "post",
@@ -532,7 +602,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "token",
-            "description": "<p>A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
+            "description": "<p>A valid token should be used here (Client or Customer) -- Can be passed in header or request body <strong>(required)</strong></p>"
           }
         ]
       }
@@ -697,6 +767,83 @@ define({ "api": [
     "filename": "src/api/v1/routes/products.js",
     "groupTitle": "Product",
     "name": "PostProductsCreate"
+  },
+  {
+    "type": "post",
+    "url": "/products/:id/changecategory",
+    "title": "Change the Category a Product belongs to",
+    "group": "Product",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of the Product -- Should be passed as a request parameter <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "new_category",
+            "description": "<p>ID of the new Category <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "product",
+            "description": "<p>Product information</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          }
+        ]
+      }
+    },
+    "filename": "src/api/v1/routes/products.js",
+    "groupTitle": "Product",
+    "name": "PostProductsIdChangecategory"
   },
   {
     "type": "put",
