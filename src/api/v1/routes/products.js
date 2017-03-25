@@ -146,7 +146,6 @@ router.post('/create', middlewares.verifyJWTToken, middlewares.authenticateAsCli
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {Object} product Product information
  * @apiSuccess {String} status Value is 'success'. Means a successful request
- * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/products/productId/edit
  */
 router.put('/:id/edit', middlewares.verifyJWTToken, middlewares.authenticateAsClient, (req, res, next) => {
     const result = Joi.validate({
@@ -222,7 +221,6 @@ router.delete('/:id/delete', middlewares.verifyJWTToken, middlewares.authenticat
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {Object} favorite Shows information about new favorite
  * @apiSuccess {String} status Value is 'success'. Means a successful request
- * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/products/productId/addtofavorites
  */
 router.post('/:id/addtofavorites', middlewares.verifyJWTToken, middlewares.authenticateAsCustomer,
     middlewares.checkUniqueFavorite, (req, res, next) => {
@@ -260,7 +258,6 @@ router.post('/:id/addtofavorites', middlewares.verifyJWTToken, middlewares.authe
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {Object} cart Shows information about new cart
  * @apiSuccess {String} status Value is 'success'. Means a successful request
- * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/products/productId/addtocart
  */
 router.post('/:id/addtocart', middlewares.verifyJWTToken, middlewares.authenticateAsCustomer, middlewares.checkUniqueCart, (req, res, next) => {
     const result = Joi.validate({

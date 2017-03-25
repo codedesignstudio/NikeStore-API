@@ -41,3 +41,5 @@ exports.authenticate = payload => {
 
     return promise;
 };
+
+// TODO: List user favs and cart
