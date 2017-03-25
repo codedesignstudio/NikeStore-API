@@ -5,8 +5,8 @@ const schema1 = Joi.object().keys({
     images: Joi.array().items(Joi.string()).min(1).max(5).unique().required(),
     price: Joi.string().required(),
     lorem: Joi.string().required(),
-    sizes: Joi.array().items(Joi.string()).unique().required(),
-    colors: Joi.array().items(Joi.string()).unique().required(),
+    sizes: Joi.array().items(Joi.string()).unique(),
+    colors: Joi.array().items(Joi.string()).unique(),
     category_id: Joi.string().required()
 });
 
@@ -19,8 +19,8 @@ const schema3 = Joi.object().keys({
     images: Joi.array().items(Joi.string()).min(1).max(5).unique().required(),
     price: Joi.string().required(),
     lorem: Joi.string().required(),
-    sizes: Joi.array().items(Joi.string()).unique().required(),
-    colors: Joi.array().items(Joi.string()).unique().required(),
+    sizes: Joi.array().items(Joi.string()).unique(),
+    colors: Joi.array().items(Joi.string()).unique(),
     id: Joi.string().required()
 });
 

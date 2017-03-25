@@ -89,8 +89,8 @@ router.post('/:id/changecategory', verifyJWTToken, authenticateAsClient, (req, r
  * @apiParam {String} category_id ID of Category to add the product to <strong>(required)</strong>
  * @apiParam {String} name Product name <strong>(required)</strong>
  * @apiParam {String[]} images Array of Product image URLs -- Minmum:1, Maximum:5 <strong>(required)</strong>
- * @apiParam {String[]} sizes Array of Product Sizes <strong>(required)</strong>
- * @apiParam {String[]} colors Array of Product Colors <strong>(required)</strong>
+ * @apiParam {String[]} sizes Array of Product Sizes <strong>(optional)</strong>
+ * @apiParam {String[]} colors Array of Product Colors <strong>(optional)</strong>
  * @apiParam {String} price Product price <strong>(required)</strong>
  * @apiParam {String} lorem Product description <strong>(required)</strong>
  * @apiParam {String} token A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong>
@@ -138,8 +138,8 @@ router.post('/create', verifyJWTToken, authenticateAsClient, (req, res, next) =>
  * @apiParam {String} id ID of Product to edit <strong>(required)</strong>
  * @apiParam {String} name Product name <strong>(required)</strong>
  * @apiParam {String[]} images Array of Product image URLs -- Minmum:1, Maximum:5 <strong>(required)</strong>
- * @apiParam {String[]} sizes Array of Product Sizes <strong>(required)</strong>
- * @apiParam {String[]} colors Array of Product Colors <strong>(required)</strong>
+ * @apiParam {String[]} sizes Array of Product Sizes <strong>(optional)</strong>
+ * @apiParam {String[]} colors Array of Product Colors <strong>(optional)</strong>
  * @apiParam {String} price Product price <strong>(required)</strong>
  * @apiParam {String} lorem Product description <strong>(required)</strong>
  * @apiParam {String} token A valid Client token should be used here -- Can be passed in header or request body <strong>(required)</strong>
