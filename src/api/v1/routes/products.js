@@ -4,8 +4,7 @@ const _ = require('underscore');
 let router = express.Router();
 const productActions = require('../models/product').productActions,
     productValidators = require('../models/product').productValidators;
-const verifyJWTToken = require('../middlewares').verifyJWTToken,
-    authenticateAsClient = require('../middlewares').authenticateAsClient;
+const middlewares = require('../middlewares');
 
 /**
  * @api {get} /products/:id Get details of a Product
@@ -18,7 +17,7 @@ const verifyJWTToken = require('../middlewares').verifyJWTToken,
  * @apiSuccess {Object} product Product information
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  */
-router.get('/:id', verifyJWTToken, (req, res, next) => {
+router.get('/:id', middlewares.verifyJWTToken, (req, res, next) => {
     const result = Joi.validate({
         id: req.params.id
     }, productValidators.schema2);
@@ -55,7 +54,7 @@ router.get('/:id', verifyJWTToken, (req, res, next) => {
  * @apiSuccess {Object} product Product information
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  */
-router.post('/:id/changecategory', verifyJWTToken, authenticateAsClient, (req, res, next) => {
+router.post('/:id/changecategory', middlewares.verifyJWTToken, middlewares.authenticateAsClient, (req, res, next) => {
     const result = Joi.validate({
         id: req.params.id,
         new_category: req.body.new_category
@@ -100,7 +99,7 @@ router.post('/:id/changecategory', verifyJWTToken, authenticateAsClient, (req, r
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/products/create
  */
-router.post('/create', verifyJWTToken, authenticateAsClient, (req, res, next) => {
+router.post('/create', middlewares.verifyJWTToken, middlewares.authenticateAsClient, (req, res, next) => {
     const result = Joi.validate({
         name: req.body.name,
         images: req.body.images,
@@ -147,9 +146,9 @@ router.post('/create', verifyJWTToken, authenticateAsClient, (req, res, next) =>
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {Object} product Product information
  * @apiSuccess {String} status Value is 'success'. Means a successful request
- * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/products/producId/edit
+ * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/products/productId/edit
  */
-router.put('/:id/edit', verifyJWTToken, authenticateAsClient, (req, res, next) => {
+router.put('/:id/edit', middlewares.verifyJWTToken, middlewares.authenticateAsClient, (req, res, next) => {
     const result = Joi.validate({
         name: req.body.name,
         images: req.body.images,
@@ -191,7 +190,7 @@ router.put('/:id/edit', verifyJWTToken, authenticateAsClient, (req, res, next) =
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  */
-router.delete('/:id/delete', verifyJWTToken, authenticateAsClient, (req, res, next) => {
+router.delete('/:id/delete', middlewares.verifyJWTToken, middlewares.authenticateAsClient, (req, res, next) => {
     const result = Joi.validate({
         id: req.params.id
     }, productValidators.schema2);
@@ -199,6 +198,81 @@ router.delete('/:id/delete', verifyJWTToken, authenticateAsClient, (req, res, ne
     if (_.isNull(result.error)) {
         productActions.remove(req.params.id).then(result => {
             res.status(200).json({status: 'success'});
+        }).catch(error => {
+            res.status(500).json({
+                status: 'failed',
+                error
+            });
+        });
+    } else {
+        res.status(500).json({
+            status: 'failed',
+            error: result.error.details
+        });
+    }
+});
+
+/**
+ * @api {post} /products/:id/addtofavorites Add a Product to Favorites
+ * @apiGroup Product
+ * @apiVersion 1.0.0
+ * @apiParam {String} id ID of Product to add the favorites <strong>(required)</strong>
+ * @apiParam {String} token A valid Customer token should be used here -- Can be passed in header or request body <strong>(required)</strong>
+ * @apiError (Error 500) {String} error Shows info about error that occured
+ * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
+ * @apiSuccess {Object} favorite Shows information about new favorite
+ * @apiSuccess {String} status Value is 'success'. Means a successful request
+ * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/products/productId/addtofavorites
+ */
+router.post('/:id/addtofavorites', middlewares.verifyJWTToken, middlewares.authenticateAsCustomer,
+    middlewares.checkUniqueFavorite, (req, res, next) => {
+        const result = Joi.validate({
+            id: req.params.id
+        }, productValidators.schema2);
+
+        if (_.isNull(result.error)) {
+            productActions.addToFavorites(req.params.id, req.decoded.id).then(result => {
+                res.status(200).json({
+                    status: 'success',
+                    favorite: result
+                });
+            }).catch(error => {
+                res.status(500).json({
+                    status: 'failed',
+                    error
+                });
+            });
+        } else {
+            res.status(500).json({
+                status: 'failed',
+                error: result.error.details
+            });
+        }
+});
+
+/**
+ * @api {post} /products/:id/addtocart Add a Product to Cart
+ * @apiGroup Product
+ * @apiVersion 1.0.0
+ * @apiParam {String} id ID of Product to add to cart <strong>(required)</strong>
+ * @apiParam {String} token A valid Customer token should be used here -- Can be passed in header or request body <strong>(required)</strong>
+ * @apiError (Error 500) {String} error Shows info about error that occured
+ * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
+ * @apiSuccess {Object} cart Shows information about new cart
+ * @apiSuccess {String} status Value is 'success'. Means a successful request
+ * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/products/productId/addtocart
+ */
+router.post('/:id/addtocart', middlewares.verifyJWTToken, middlewares.authenticateAsCustomer, middlewares.checkUniqueCart, (req, res, next) => {
+    const result = Joi.validate({
+        id: req.params.id
+    }, productValidators.schema2);
+
+    if (_.isNull(result.error)) {
+        productActions.addToCart(req.params.id, req.decoded.id).then(result => {
+            res.status(200).json({
+                status: 'success',
+                cart: result
+            });
         }).catch(error => {
             res.status(500).json({
                 status: 'failed',

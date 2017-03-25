@@ -686,14 +686,14 @@ define({ "api": [
             "type": "String[]",
             "optional": false,
             "field": "sizes",
-            "description": "<p>Array of Product Sizes <strong>(required)</strong></p>"
+            "description": "<p>Array of Product Sizes <strong>(optional)</strong></p>"
           },
           {
             "group": "Parameter",
             "type": "String[]",
             "optional": false,
             "field": "colors",
-            "description": "<p>Array of Product Colors <strong>(required)</strong></p>"
+            "description": "<p>Array of Product Colors <strong>(optional)</strong></p>"
           },
           {
             "group": "Parameter",
@@ -767,6 +767,156 @@ define({ "api": [
     "filename": "src/api/v1/routes/products.js",
     "groupTitle": "Product",
     "name": "PostProductsCreate"
+  },
+  {
+    "type": "post",
+    "url": "/products/:id/addtocart",
+    "title": "Add a Product to Cart",
+    "group": "Product",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of Product to add to cart <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>A valid Customer token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "cart",
+            "description": "<p>Shows information about new cart</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "https://nikeminimalist.herokuapp.com/api/v1/products/productId/addtocart"
+      }
+    ],
+    "filename": "src/api/v1/routes/products.js",
+    "groupTitle": "Product",
+    "name": "PostProductsIdAddtocart"
+  },
+  {
+    "type": "post",
+    "url": "/products/:id/addtofavorites",
+    "title": "Add a Product to Favorites",
+    "group": "Product",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of Product to add the favorites <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>A valid Customer token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "favorite",
+            "description": "<p>Shows information about new favorite</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "https://nikeminimalist.herokuapp.com/api/v1/products/productId/addtofavorites"
+      }
+    ],
+    "filename": "src/api/v1/routes/products.js",
+    "groupTitle": "Product",
+    "name": "PostProductsIdAddtofavorites"
   },
   {
     "type": "post",
@@ -880,14 +1030,14 @@ define({ "api": [
             "type": "String[]",
             "optional": false,
             "field": "sizes",
-            "description": "<p>Array of Product Sizes <strong>(required)</strong></p>"
+            "description": "<p>Array of Product Sizes <strong>(optional)</strong></p>"
           },
           {
             "group": "Parameter",
             "type": "String[]",
             "optional": false,
             "field": "colors",
-            "description": "<p>Array of Product Colors <strong>(required)</strong></p>"
+            "description": "<p>Array of Product Colors <strong>(optional)</strong></p>"
           },
           {
             "group": "Parameter",
@@ -955,7 +1105,7 @@ define({ "api": [
     },
     "sampleRequest": [
       {
-        "url": "https://nikeminimalist.herokuapp.com/api/v1/products/producId/edit"
+        "url": "https://nikeminimalist.herokuapp.com/api/v1/products/productId/edit"
       }
     ],
     "filename": "src/api/v1/routes/products.js",

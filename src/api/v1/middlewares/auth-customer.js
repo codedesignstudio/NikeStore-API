@@ -14,7 +14,7 @@ let authenticateAsCustomer = (req, res, next) => {
     }).catch(error => {
         res.status(500).json({
             status: 'failed',
-                error: 'Failed to retrieve User. Error: ' + error.message
+            error: 'Failed to retrieve User. Error: ' + error.message
         });
     });
 };
