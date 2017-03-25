@@ -284,4 +284,68 @@ router.post('/:id/addtocart', middlewares.verifyJWTToken, middlewares.authentica
     }
 });
 
+/**
+ * @api {delete} /products/:id/removefromfavorites Remove a product from User's favorites
+ * @apiGroup Product
+ * @apiVersion 1.0.0
+ * @apiParam {String} id ID of the Product to remove -- Should be passed as a request parameter <strong>(required)</strong>
+ * @apiParam {String} token A valid Customer token should be used here -- Can be passed in header or request body <strong>(required)</strong>
+ * @apiError (Error 500) {String} error Shows info about error that occured
+ * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
+ * @apiSuccess {String} status Value is 'success'. Means a successful request
+ */
+router.delete('/:id/removefromfavorites', middlewares.verifyJWTToken, middlewares.authenticateAsCustomer, (req, res, next) => {
+    const result = Joi.validate({
+        id: req.params.id
+    }, productValidators.schema2);
+
+    if (_.isNull(result.error)) {
+        productActions.removeFromFavorites(req.params.id, req.decoded.id).then(result => {
+            res.status(200).json({status: 'success'});
+        }).catch(error => {
+            res.status(500).json({
+                status: 'failed',
+                error
+            });
+        });
+    } else {
+        res.status(500).json({
+            status: 'failed',
+            error: result.error.details
+        });
+    }
+});
+
+/**
+ * @api {delete} /products/:id/removefromcart Remove a product from User's cart
+ * @apiGroup Product
+ * @apiVersion 1.0.0
+ * @apiParam {String} id ID of the Product to remove -- Should be passed as a request parameter <strong>(required)</strong>
+ * @apiParam {String} token A valid Customer token should be used here -- Can be passed in header or request body <strong>(required)</strong>
+ * @apiError (Error 500) {String} error Shows info about error that occured
+ * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
+ * @apiSuccess {String} status Value is 'success'. Means a successful request
+ */
+router.delete('/:id/removefromcart', middlewares.verifyJWTToken, middlewares.authenticateAsCustomer, (req, res, next) => {
+    const result = Joi.validate({
+        id: req.params.id
+    }, productValidators.schema2);
+
+    if (_.isNull(result.error)) {
+        productActions.removeFromCart(req.params.id, req.decoded.id).then(result => {
+            res.status(200).json({status: 'success'});
+        }).catch(error => {
+            res.status(500).json({
+                status: 'failed',
+                error
+            });
+        });
+    } else {
+        res.status(500).json({
+            status: 'failed',
+            error: result.error.details
+        });
+    }
+});
+
 module.exports = router;

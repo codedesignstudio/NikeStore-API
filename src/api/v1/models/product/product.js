@@ -135,5 +135,42 @@ exports.addToCart = (product_id, user_id) => {
     return promise;
 };
 
-// TODO: Remove Product from cart
-// TODO: Remove Product from favorite
+exports.removeFromFavorites = (product_id, user_id) => {
+    let promise = new Parse.Promise();
+    let query = new Parse.Query(MinimalistProduct);
+    query.get(product_id).then(product => {
+        let query2 = new Parse.Query(MinimalistUser);
+        query2.get(user_id).then(user => {
+            let query3 = new Parse.Query(MinimalistFavorite);
+            query3.equalTo('product', product);
+            query3.equalTo('user', user);
+            query3.first().then(favorite => {
+                favorite.destroy().then(
+                    favorite => promise.resolve(null)
+                ).catch(error => promise.reject('Failed to remove Product from Favorite. Error: ' + error.message));
+            }).catch(error => promise.reject('Failed to retrieve Favorite. Error: ' + error.message));
+        }).catch(error => promise.reject('Failed to retrieve User. Error: ' + error.message));
+    }).catch(error => promise.reject('Failed to retrieve Product. Error: ' + error.message));
+
+    return promise;
+};
+
+exports.removeFromCart = (product_id, user_id) => {
+    let promise = new Parse.Promise();
+    let query = new Parse.Query(MinimalistProduct);
+    query.get(product_id).then(product => {
+        let query2 = new Parse.Query(MinimalistUser);
+        query2.get(user_id).then(user => {
+            let query3 = new Parse.Query(MinimalistCart);
+            query3.equalTo('product', product);
+            query3.equalTo('user', user);
+            query3.first().then(cart => {
+                cart.destroy().then(
+                    cart => promise.resolve(null)
+                ).catch(error => promise.reject('Failed to remove Product from Cart. Error: ' + error.message));
+            }).catch(error => promise.reject('Failed to retrieve Cart. Error: ' + error.message));
+        }).catch(error => promise.reject('Failed to retrieve User. Error: ' + error.message));
+    }).catch(error => promise.reject('Failed to retrieve Product. Error: ' + error.message));
+
+    return promise;
+};

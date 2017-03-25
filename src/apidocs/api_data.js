@@ -582,6 +582,132 @@ define({ "api": [
     "name": "DeleteProductsIdDelete"
   },
   {
+    "type": "delete",
+    "url": "/products/:id/removefromcart",
+    "title": "Remove a product from User's cart",
+    "group": "Product",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of the Product to remove -- Should be passed as a request parameter <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>A valid Customer token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          }
+        ]
+      }
+    },
+    "filename": "src/api/v1/routes/products.js",
+    "groupTitle": "Product",
+    "name": "DeleteProductsIdRemovefromcart"
+  },
+  {
+    "type": "delete",
+    "url": "/products/:id/removefromfavorites",
+    "title": "Remove a product from User's favorites",
+    "group": "Product",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>ID of the Product to remove -- Should be passed as a request parameter <strong>(required)</strong></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>A valid Customer token should be used here -- Can be passed in header or request body <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          }
+        ]
+      }
+    },
+    "filename": "src/api/v1/routes/products.js",
+    "groupTitle": "Product",
+    "name": "DeleteProductsIdRemovefromfavorites"
+  },
+  {
     "type": "get",
     "url": "/products/:id",
     "title": "Get details of a Product",
