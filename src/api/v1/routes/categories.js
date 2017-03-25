@@ -4,8 +4,7 @@ const _ = require('underscore');
 let router = express.Router();
 const categoryActions = require('../models/category').categoryActions,
     categoryValidators = require('../models/category').categoryValidators;
-const verifyJWTToken = require('../middlewares').verifyJWTToken,
-    authenticateAsClient = require('../middlewares').authenticateAsClient;
+const middlewares = require('../middlewares');
 
 /**
  * @api {get} /categories Get all categories
@@ -17,7 +16,7 @@ const verifyJWTToken = require('../middlewares').verifyJWTToken,
  * @apiSuccess {Object} categories Categories information
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  */
-router.get('/', verifyJWTToken, (req, res, next) => {
+router.get('/', middlewares.verifyJWTToken, (req, res, next) => {
     categoryActions.getAll().then(result => {
         res.status(200).json({
             status: 'success',
@@ -42,7 +41,7 @@ router.get('/', verifyJWTToken, (req, res, next) => {
  * @apiSuccess {Object} category Category information
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  */
-router.get('/:id', verifyJWTToken, (req, res, next) => {
+router.get('/:id', middlewares.verifyJWTToken, (req, res, next) => {
     const result = Joi.validate({
         id: req.params.id
     }, categoryValidators.schema2);
@@ -78,7 +77,7 @@ router.get('/:id', verifyJWTToken, (req, res, next) => {
  * @apiSuccess {Object} products List of products in Category
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  */
-router.get('/:id/products', verifyJWTToken, (req, res, next) => {
+router.get('/:id/products', middlewares.verifyJWTToken, (req, res, next) => {
     const result = Joi.validate({
         id: req.params.id
     }, categoryValidators.schema2);
@@ -116,7 +115,7 @@ router.get('/:id/products', verifyJWTToken, (req, res, next) => {
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/categories/create
  */
-router.post('/create', verifyJWTToken, authenticateAsClient, (req, res, next) => {
+router.post('/create', middlewares.verifyJWTToken, middlewares.authenticateAsClient, (req, res, next) => {
     const result = Joi.validate({
         name: req.body.name,
         attachment_url: req.body.attachment_url,
@@ -156,7 +155,7 @@ router.post('/create', verifyJWTToken, authenticateAsClient, (req, res, next) =>
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  * @apiSampleRequest https://nikeminimalist.herokuapp.com/api/v1/categories/categoryId/edit
  */
-router.put('/:id/edit', verifyJWTToken, authenticateAsClient, (req, res, next) => {
+router.put('/:id/edit', middlewares.verifyJWTToken, middlewares.authenticateAsClient, (req, res, next) => {
     const result = Joi.validate({
         name: req.body.name,
         attachment_url: req.body.attachment_url,
@@ -194,7 +193,7 @@ router.put('/:id/edit', verifyJWTToken, authenticateAsClient, (req, res, next) =
  * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
  * @apiSuccess {String} status Value is 'success'. Means a successful request
  */
-router.delete('/:id/delete', verifyJWTToken, authenticateAsClient, (req, res, next) => {
+router.delete('/:id/delete', middlewares.verifyJWTToken, middlewares.authenticateAsClient, (req, res, next) => {
     const result = Joi.validate({
         id: req.params.id
     }, categoryValidators.schema2);

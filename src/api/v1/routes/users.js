@@ -4,6 +4,7 @@ const _ = require('underscore');
 let router = express.Router();
 const userActions = require('../models/user').userActions,
     userValidators = require('../models/user').userValidators;
+const middlewares = require('../middlewares');
 
 /**
  * @api {post} /users/register Register a new User
@@ -85,6 +86,56 @@ router.post('/login', (req, res, next) => {
             error: result.error.details
         });
     }
+});
+
+/**
+ * @api {get} /users/favorites Get products a User has added to favorites
+ * @apiGroup User
+ * @apiVersion 1.0.0
+ * @apiParam {String} id User ID <strong>(required)</strong>
+ * @apiError (Error 500) {String} error Shows info about error that occured
+ * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
+ * @apiSuccess {Object} favorites User favorites
+ * @apiSuccess {String} status Value is 'success'. Means a successful request
+ * @apiSuccess {String} token JWT that would be used to make subsequent requests
+ */
+router.get('/:id/favorites', middlewares.verifyJWTToken, middlewares.authenticateAsCustomer, (req, res, next) => {
+    userActions.getFavorites(req.params.id).then(result => {
+        res.status(200).json({
+            status: 'success',
+            favorites: result
+        });
+    }).catch(error => {
+        res.status(500).json({
+            status: 'failed',
+            error
+        });
+    });
+});
+
+/**
+ * @api {get} /users/cart Get products a User has added to cart
+ * @apiGroup User
+ * @apiVersion 1.0.0
+ * @apiParam {String} id User ID <strong>(required)</strong>
+ * @apiError (Error 500) {String} error Shows info about error that occured
+ * @apiError (Error 500) {String} status Value is 'failed'. Means the request wasn't successful
+ * @apiSuccess {Object} cart User cart
+ * @apiSuccess {String} status Value is 'success'. Means a successful request
+ * @apiSuccess {String} token JWT that would be used to make subsequent requests
+ */
+router.get('/:id/cart', middlewares.verifyJWTToken, middlewares.authenticateAsCustomer, (req, res, next) => {
+    userActions.getCart(req.params.id).then(result => {
+        res.status(200).json({
+            status: 'success',
+            cart: result
+        });
+    }).catch(error => {
+        res.status(500).json({
+            status: 'failed',
+            error
+        });
+    });
 });
 
 module.exports = router;

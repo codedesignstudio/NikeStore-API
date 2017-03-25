@@ -13,7 +13,7 @@ let checkUniqueCart = (req, res, next) => {
             query3.equalTo('product', product);
             query3.equalTo('user', user);
             query3.first().then(cart => {
-                if (_.isNull(cart)) {
+                if (_.isUndefined(cart)) {
                     next();
                 } else {
                     res.status(500).json({

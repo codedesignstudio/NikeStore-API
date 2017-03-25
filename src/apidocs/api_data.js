@@ -834,11 +834,6 @@ define({ "api": [
         ]
       }
     },
-    "sampleRequest": [
-      {
-        "url": "https://nikeminimalist.herokuapp.com/api/v1/products/productId/addtocart"
-      }
-    ],
     "filename": "src/api/v1/routes/products.js",
     "groupTitle": "Product",
     "name": "PostProductsIdAddtocart"
@@ -909,11 +904,6 @@ define({ "api": [
         ]
       }
     },
-    "sampleRequest": [
-      {
-        "url": "https://nikeminimalist.herokuapp.com/api/v1/products/productId/addtofavorites"
-      }
-    ],
     "filename": "src/api/v1/routes/products.js",
     "groupTitle": "Product",
     "name": "PostProductsIdAddtofavorites"
@@ -1103,14 +1093,149 @@ define({ "api": [
         ]
       }
     },
-    "sampleRequest": [
-      {
-        "url": "https://nikeminimalist.herokuapp.com/api/v1/products/productId/edit"
-      }
-    ],
     "filename": "src/api/v1/routes/products.js",
     "groupTitle": "Product",
     "name": "PutProductsIdEdit"
+  },
+  {
+    "type": "get",
+    "url": "/users/cart",
+    "title": "Get products a User has added to cart",
+    "group": "User",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>User ID <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "cart",
+            "description": "<p>User cart</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>JWT that would be used to make subsequent requests</p>"
+          }
+        ]
+      }
+    },
+    "filename": "src/api/v1/routes/users.js",
+    "groupTitle": "User",
+    "name": "GetUsersCart"
+  },
+  {
+    "type": "get",
+    "url": "/users/favorites",
+    "title": "Get products a User has added to favorites",
+    "group": "User",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>User ID <strong>(required)</strong></p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 500": [
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Shows info about error that occured</p>"
+          },
+          {
+            "group": "Error 500",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'failed'. Means the request wasn't successful</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "favorites",
+            "description": "<p>User favorites</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Value is 'success'. Means a successful request</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>JWT that would be used to make subsequent requests</p>"
+          }
+        ]
+      }
+    },
+    "filename": "src/api/v1/routes/users.js",
+    "groupTitle": "User",
+    "name": "GetUsersFavorites"
   },
   {
     "type": "post",

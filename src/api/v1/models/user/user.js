@@ -4,6 +4,8 @@ const hashPassword = require('../../config').hashPassword,
     signJWTToken = require('../../config').signJWTToken,
     checkUniqueUser = require('../../config').checkUniqueUser;
 let MinimalistUser = Parse.Object.extend('MinimalistUser');
+let MinimalistFavorite = Parse.Object.extend('MinimalistFavorite');
+let MinimalistCart = Parse.Object.extend('MinimalistCart');
 
 exports.create = payload => {
     let promise = new Parse.Promise();
@@ -42,4 +44,32 @@ exports.authenticate = payload => {
     return promise;
 };
 
-// TODO: List user favs and cart
+exports.getFavorites = id => {
+    let promise = new Parse.Promise();
+    let query = new Parse.Query(MinimalistUser);
+    query.get(id).then(user => {
+        let query2 = new Parse.Query(MinimalistFavorite);
+        query2.equalTo('user', user);
+        query2.include('user', 'product');
+        query2.find().then(
+            favorites => promise.resolve(favorites)
+        ).catch(error => promise.reject('Failed to retrieve User Favorites. Error: ' + error.message));
+    }).catch(error => promise.reject('Failed to retrieve User. Error: ' + error.message));
+
+    return promise;
+};
+
+exports.getCart = id => {
+    let promise = new Parse.Promise();
+    let query = new Parse.Query(MinimalistUser);
+    query.get(id).then(user => {
+        let query2 = new Parse.Query(MinimalistCart);
+        query2.equalTo('user', user);
+        query2.include('user', 'product');
+        query2.find().then(
+            cart => promise.resolve(cart)
+        ).catch(error => promise.reject('Failed to retrieve User Cart. Error: ' + error.message));
+    }).catch(error => promise.reject('Failed to retrieve User. Error: ' + error.message));
+
+    return promise;
+};

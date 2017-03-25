@@ -13,7 +13,7 @@ let checkUniqueFavorite = (req, res, next) => {
             query3.equalTo('product', product);
             query3.equalTo('user', user);
             query3.first().then(favorite => {
-                if (_.isNull(favorite)) {
+                if (_.isUndefined(favorite)) {
                     next();
                 } else {
                     res.status(500).json({
