@@ -1225,7 +1225,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/users/cart",
+    "url": "/users/:id/cart",
     "title": "Get products a User has added to cart",
     "group": "User",
     "version": "1.0.0",
@@ -1291,11 +1291,11 @@ define({ "api": [
     },
     "filename": "src/api/v1/routes/users.js",
     "groupTitle": "User",
-    "name": "GetUsersCart"
+    "name": "GetUsersIdCart"
   },
   {
     "type": "get",
-    "url": "/users/favorites",
+    "url": "/userss/:id/favorites",
     "title": "Get products a User has added to favorites",
     "group": "User",
     "version": "1.0.0",
@@ -1361,7 +1361,7 @@ define({ "api": [
     },
     "filename": "src/api/v1/routes/users.js",
     "groupTitle": "User",
-    "name": "GetUsersFavorites"
+    "name": "GetUserssIdFavorites"
   },
   {
     "type": "post",
