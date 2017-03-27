@@ -74,9 +74,6 @@ exports.remove = id => {
             category => promise.resolve(null)
         ).catch(error => promise.reject('Failed to delete Category. Error: ' + error.message));
     }).catch(error => promise.reject('Failed to retrieve Category. Error: ' + error.message));
-    
+
     return promise;
 };
-
-// TODO: Add products counts to getAll and getOne
-// TODO: Delete all products in category on delete

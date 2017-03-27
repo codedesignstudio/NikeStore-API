@@ -89,7 +89,7 @@ router.post('/login', (req, res, next) => {
 });
 
 /**
- * @api {get} /users/favorites Get products a User has added to favorites
+ * @api {get} /userss/:id/favorites Get products a User has added to favorites
  * @apiGroup User
  * @apiVersion 1.0.0
  * @apiParam {String} id User ID <strong>(required)</strong>
@@ -114,7 +114,7 @@ router.get('/:id/favorites', middlewares.verifyJWTToken, middlewares.authenticat
 });
 
 /**
- * @api {get} /users/cart Get products a User has added to cart
+ * @api {get} /users/:id/cart Get products a User has added to cart
  * @apiGroup User
  * @apiVersion 1.0.0
  * @apiParam {String} id User ID <strong>(required)</strong>
